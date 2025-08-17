@@ -140,18 +140,7 @@ export default function RomanticConfession() {
           </div>
         )}
 
-        {/* Success Message */}
-        {isAccepted && (
-          <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 p-6 text-center transform animate-bounce">
-            <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400 mx-auto mb-4 animate-pulse" />
-            <h2 className="text-xl font-bold text-green-800 dark:text-green-200 mb-2">
-              🎉 Yay! Partnership Accepted!
-            </h2>
-            <p className="text-green-700 dark:text-green-300">
-              Let's start our beautiful journey together!
-            </p>
-          </Card>
-        )}
+
 
         {/* Timeline */}
         {isAccepted && (
