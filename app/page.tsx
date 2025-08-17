@@ -10,6 +10,7 @@ export default function RomanticConfession() {
   const [currentPhase, setCurrentPhase] = useState(0)
   const [hearts, setHearts] = useState<Array<{id: number, x: number, y: number, delay: number}>>([])
   const [showSparkles, setShowSparkles] = useState(false)
+  const [language, setLanguage] = useState<'en' | 'vi'>('en')
 
   const handleAccept = () => {
     setIsAccepted(true)
@@ -29,26 +30,99 @@ export default function RomanticConfession() {
     }, 4000)
   }
 
+  const translations = {
+    en: {
+      title: "💌 Romantic Confession 💌",
+      from: "From: Le Trieu Phu",
+      dear: "Dear",
+      letter: {
+        p1: "I hope this message doesn't land in your \"spam\" folder, because what I'm about to propose might be the most important project I've ever worked on.",
+        p2: "After two weeks of friendly interaction and thorough observation, I've come to the conclusion that I'd like to initiate a long-term \"partnership\" with you. The project scope: getting to know each other better. The KPIs: laughter, memorable moments, and maybe even something more meaningful along the way.",
+        p3: "I believe our \"compatibility index\" is already showing promising signs, but I'd love the opportunity to conduct more \"in-person meetings\" (a.k.a. spending time together). Don't worry, there will be no boring PowerPoints—just good vibes, honest conversations, and maybe coffee or dinner.",
+        p4: "If you're open to this collaboration, I'm confident we can build something wonderful together. And if not, I'll still consider myself lucky to have met someone as amazing as you.",
+        p5: "Looking forward to your kind \"approval.\"",
+        regards: "Warm regards,",
+        signature: "Le Trieu Phu"
+      },
+      acceptButton: "Đồng ý 💚",
+      timelineTitle: "💕 Our Journey Together 💕",
+      phases: [
+        {
+          title: "Phase 1: Watch Demon Slayer Movie",
+          description: "Enjoy the emotional anime movie together",
+          activities: ["Watch Demon Slayer movie", "Share emotions", "Discuss favorite characters"]
+        },
+        {
+          title: "Phase 2: Eat & Explore Saigon", 
+          description: "Explore Saigon street food",
+          activities: ["Eat & explore good restaurants", "Discover street food", "Take memorable photos"]
+        },
+        {
+          title: "Phase 3: Forever Together",
+          description: "You are the sweetest girl I ever met. I want to be with you and protect you forever!",
+          activities: ["Promise to protect you", "Be there for you always", "Make you happy every day", "Love you forever"]
+        }
+      ],
+      startPhase: "Start Phase"
+    },
+    vi: {
+      title: "💌 Lời Tỏ Tình Lãng Mạn 💌",
+      from: "Từ: Lê Triệu Phú",
+      dear: "Gửi",
+      letter: {
+        p1: "Tôi hy vọng tin nhắn này không rơi vào thư mục \"spam\" của bạn, vì những gì tôi sắp đề xuất có thể là dự án quan trọng nhất mà tôi từng làm.",
+        p2: "Sau hai tuần tương tác thân thiện và quan sát kỹ lưỡng, tôi đã đi đến kết luận rằng tôi muốn bắt đầu một \"mối quan hệ đối tác\" dài hạn với bạn. Phạm vi dự án: tìm hiểu nhau tốt hơn. Các KPI: tiếng cười, những khoảnh khắc đáng nhớ, và có thể là điều gì đó có ý nghĩa hơn trên đường đi.",
+        p3: "Tôi tin rằng \"chỉ số tương thích\" của chúng ta đã cho thấy những dấu hiệu hứa hẹn, nhưng tôi rất muốn có cơ hội thực hiện nhiều \"cuộc gặp mặt trực tiếp\" hơn (tức là dành thời gian bên nhau). Đừng lo lắng, sẽ không có những bài thuyết trình PowerPoint nhàm chán—chỉ có những rung cảm tốt, những cuộc trò chuyện chân thành, và có thể là cà phê hoặc bữa tối.",
+        p4: "Nếu bạn sẵn sàng cho sự hợp tác này, tôi tin tưởng rằng chúng ta có thể xây dựng điều gì đó tuyệt vời cùng nhau. Và nếu không, tôi vẫn coi mình may mắn khi gặp được một người tuyệt vời như bạn.",
+        p5: "Mong chờ sự \"chấp thuận\" tử tế của bạn.",
+        regards: "Trân trọng,",
+        signature: "Lê Triệu Phú"
+      },
+      acceptButton: "Đồng ý 💚",
+      timelineTitle: "💕 Hành Trình Của Chúng Ta 💕",
+      phases: [
+        {
+          title: "Giai Đoạn 1: Xem Phim Thanh Gươm Diệt Quỷ",
+          description: "Cùng nhau thưởng thức bộ phim anime đầy cảm xúc",
+          activities: ["Xem phim Thanh Gươm Diệt Quỷ", "Chia sẻ cảm xúc", "Thảo luận về nhân vật yêu thích"]
+        },
+        {
+          title: "Giai Đoạn 2: Ăn & Lượn Lờ Sài Gòn", 
+          description: "Khám phá ẩm thực đường phố Sài Gòn",
+          activities: ["Ăn & Lượn lờ các quán ngon", "Khám phá ẩm thực đường phố", "Chụp ảnh kỷ niệm"]
+        },
+        {
+          title: "Giai Đoạn 3: Mãi Mãi Bên Nhau",
+          description: "Bạn là cô gái ngọt ngào nhất mà tôi từng gặp. Tôi muốn ở bên bạn và bảo vệ bạn mãi mãi!",
+          activities: ["Hứa sẽ bảo vệ bạn", "Luôn ở bên bạn", "Làm bạn hạnh phúc mỗi ngày", "Yêu bạn mãi mãi"]
+        }
+      ],
+      startPhase: "Bắt Đầu Giai Đoạn"
+    }
+  }
+
+  const t = translations[language]
+
   const phases = [
     {
-      title: "Phase 1: Xem Phim Thanh Gươm Diệt Quỷ",
-      description: "Cùng nhau thưởng thức bộ phim anime đầy cảm xúc",
+      title: t.phases[0].title,
+      description: t.phases[0].description,
       icon: Film,
-      activities: ["Xem phim Thanh Gươm Diệt Quỷ", "Chia sẻ cảm xúc", "Thảo luận về nhân vật yêu thích"],
+      activities: t.phases[0].activities,
       color: "from-purple-500 to-pink-500"
     },
     {
-      title: "Phase 2: Ăn & Lượn Lờ Sài Gòn", 
-      description: "Khám phá ẩm thực đường phố Sài Gòn",
+      title: t.phases[1].title, 
+      description: t.phases[1].description,
       icon: MapPin,
-      activities: ["Ăn & Lượn lờ các quán ngon", "Khám phá ẩm thực đường phố", "Chụp ảnh kỷ niệm"],
+      activities: t.phases[1].activities,
       color: "from-orange-500 to-red-500"
     },
     {
-      title: "Phase 3: Forever Together",
-      description: "You are the sweetest girl I ever met. I want to be with you and protect you forever!",
+      title: t.phases[2].title,
+      description: t.phases[2].description,
       icon: Calendar,
-      activities: ["Promise to protect you", "Be there for you always", "Make you happy every day", "Love you forever"],
+      activities: t.phases[2].activities,
       color: "from-blue-500 to-purple-500"
     }
   ]
@@ -75,51 +149,63 @@ export default function RomanticConfession() {
 
       <div className="max-w-2xl mx-auto space-y-6 relative z-10">
         
+        {/* Language Toggle */}
+        <div className="flex justify-end mb-4">
+          <Button
+            onClick={() => setLanguage(language === 'en' ? 'vi' : 'en')}
+            variant="outline"
+            size="sm"
+            className="bg-white dark:bg-slate-800 border-pink-300 dark:border-pink-600 text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-all duration-300"
+          >
+            {language === 'en' ? '🇻🇳 Tiếng Việt' : '🇺🇸 English'}
+          </Button>
+        </div>
+        
         {/* Email Letter */}
         <Card className="bg-white dark:bg-slate-800 shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border-2 border-pink-200 dark:border-pink-800">
           <div className="space-y-4">
             <div className="text-center mb-6">
               <div className="inline-block animate-pulse">
                 <h1 className="text-5xl font-bold mb-2 text-slate-800 dark:text-slate-200 font-handwriting">
-                  💌 Romantic Confession 💌
+                  {t.title}
                 </h1>
               </div>
               <p className="text-slate-600 dark:text-slate-400 flex items-center justify-center font-handwriting text-xl">
                 <Heart className="w-5 h-5 mr-2 text-pink-500 animate-bounce" />
-                <span className="font-semibold text-slate-800 dark:text-slate-200">From: Le Trieu Phu</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">{t.from}</span>
                 <Heart className="w-5 h-5 ml-2 text-pink-500 animate-bounce" />
               </p>
             </div>
 
             <div className="prose prose-slate dark:prose-invert max-w-none font-handwriting">
               <p className="text-2xl leading-relaxed text-slate-800 dark:text-slate-200">
-                Dear <span className="font-bold text-pink-600 animate-pulse text-3xl">Bich Thuy</span>,
+                {t.dear} <span className="font-bold text-pink-600 animate-pulse text-3xl">Bich Thuy</span>,
               </p>
 
               <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
-                I hope this message doesn't land in your "spam" folder, because what I'm about to propose might be the <span className="font-bold text-pink-600">most important project</span> I've ever worked on.
+                {t.letter.p1}
               </p>
 
               <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
-                After two weeks of friendly interaction and thorough observation, I've come to the conclusion that I'd like to initiate a <span className="font-bold text-pink-600">long-term "partnership"</span> with you. The project scope: getting to know each other better. The KPIs: laughter, memorable moments, and maybe even something <span className="font-bold text-pink-600">more meaningful</span> along the way.
+                {t.letter.p2}
               </p>
 
               <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
-                I believe our "compatibility index" is already showing <span className="font-bold text-pink-600">promising signs</span>, but I'd love the opportunity to conduct more "in-person meetings" (a.k.a. spending time together). Don't worry, there will be no boring PowerPoints—just good vibes, honest conversations, and maybe coffee or dinner.
+                {t.letter.p3}
               </p>
 
               <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
-                If you're open to this <span className="font-bold text-pink-600">collaboration</span>, I'm confident we can build something <span className="font-bold text-pink-600">wonderful</span> together. And if not, I'll still consider myself lucky to have met someone as <span className="font-bold text-pink-600">amazing</span> as you.
+                {t.letter.p4}
               </p>
 
               <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
-                Looking forward to your kind "approval."
+                {t.letter.p5}
               </p>
 
               <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
                 <p className="font-medium text-slate-800 dark:text-slate-200 font-handwriting text-xl">
-                  <span className="text-slate-800 dark:text-slate-200 font-semibold">Warm regards,</span><br />
-                  <span className="text-pink-600 font-bold text-3xl animate-pulse">Le Trieu Phu</span>
+                  <span className="text-slate-800 dark:text-slate-200 font-semibold">{t.letter.regards}</span><br />
+                  <span className="text-pink-600 font-bold text-3xl animate-pulse">{t.letter.signature}</span>
                 </p>
               </div>
             </div>
@@ -135,7 +221,7 @@ export default function RomanticConfession() {
               className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-semibold px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse"
             >
               <Heart className="w-6 h-6 mr-3 animate-bounce" />
-              Đồng ý 💚
+              {t.acceptButton}
             </Button>
           </div>
         )}
@@ -148,7 +234,7 @@ export default function RomanticConfession() {
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
               <Sparkles className="w-8 h-8 inline mr-3 text-yellow-500 animate-spin" />
               <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-                💕 Our Journey Together 💕
+                {t.timelineTitle}
               </span>
               <Sparkles className="w-8 h-8 inline ml-3 text-yellow-500 animate-spin" />
             </h2>
@@ -250,7 +336,7 @@ export default function RomanticConfession() {
                                 size="lg"
                               >
                                 <Calendar className="w-5 h-5 mr-2" />
-                                Start Phase {index + 1} ✨
+                                {t.startPhase} {index + 1} ✨
                               </Button>
                             </div>
                           )}
